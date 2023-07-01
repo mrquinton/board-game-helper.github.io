@@ -1,1 +1,0 @@
-# board-game-helper.github.io
