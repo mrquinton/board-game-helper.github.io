@@ -5,10 +5,11 @@ import HeroList from './components/heroList';
 import allHeroes from './heroes/allHeroes';
 import Hero from './types/hero';
 import MoveList from './components/moveList';
+import InGame from './components/inGame';
 
 export enum DisplayStates {
   HERO_PICKER = "HERO_PICKER",
-  MOVE_PICKER = "MOVE_PICKER"
+  IN_GAME = "IN_GAME"
 }
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
 
   const selectHero = (hero: Hero) => {
     setActiveHero(hero)
-    setActiveDisplay(DisplayStates.MOVE_PICKER)
+    setActiveDisplay(DisplayStates.IN_GAME)
   }
 
   return (
@@ -26,10 +27,7 @@ function App() {
         <Typography variant="h4">Pick a Hero</Typography>
         <HeroList heroes={allHeroes} selectHero={selectHero}/>
       </Stack>}
-      {activeDisplay === DisplayStates.MOVE_PICKER && <Stack direction="column" spacing={2}>
-        <Typography variant="h4">Select a Move</Typography>
-        {activeHero && <MoveList moves={activeHero.activeMoves} />}
-      </Stack>}
+      {(activeDisplay === DisplayStates.IN_GAME && activeHero) && <InGame hero={activeHero}/>}
     </Stack>
   );
 }
