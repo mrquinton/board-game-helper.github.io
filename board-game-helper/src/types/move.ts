@@ -2,6 +2,8 @@ export enum MoveTypes {
     Skill,
     Attack,
     Movement,
+    Defense,
+    Basic,
     Ultimate
 }
 
@@ -10,7 +12,8 @@ export enum ColorTypes {
     Gold,
     Blue,
     Green,
-    Red
+    Red,
+    Ultimate
 }
 
 export enum Item {
