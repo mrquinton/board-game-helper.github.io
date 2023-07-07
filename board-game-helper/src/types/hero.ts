@@ -47,7 +47,13 @@ export class InGameHero {
     }
 
     selectMove(move: Move) {
+        if (this.selectedMove) {
+            this.activeMoves.push(this.selectedMove)
+        }
         this.selectedMove = move
+        this.activeMoves = this.activeMoves.filter((card => {
+            return card.name !== move.name
+        }))
         this.gameState = GameStates.TAKE_TURN
     }
 

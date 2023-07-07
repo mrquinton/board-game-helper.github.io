@@ -30,6 +30,7 @@ export default function MoveDisplay({move, actions, inGameHero, updateInGameHero
         <Stack direction="column">
         <Typography variant="h5">{move.name}</Typography>
         <Typography variant="body1">{move.color} - {move.level}</Typography>
+        {(actions.includes(CardActions.upgrade) && move.item) && <Typography>Item: {move.item}</Typography>}
         <Stack direction="row">
             {actions.includes(CardActions.select) && <Button onClick={() => {selectMove(move)}}>Select Move</Button>}
             {actions.includes(CardActions.discard) && <Button onClick={() => {discardMove(move)}}>Discard Move</Button>}
