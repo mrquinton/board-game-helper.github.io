@@ -1,8 +1,8 @@
 import { Button, Stack, Typography } from "@mui/material";
-import Hero from "../types/hero";
+import Hero, { InGameHero } from "../types/hero";
 import { useState } from "react";
 import MoveList from "./moveList";
-import Move from "../types/move";
+import Move, { CardActions } from "../types/move";
 import MoveDisplay from "./moveDisplay";
 import HeroStats from "./heroStats";
 
@@ -21,75 +21,43 @@ export interface InGameProps {
     hero: Hero
 }
 export default function InGame({hero}: InGameProps) {
-    const [gameState, setGameState] = useState(GameStates.PICK_MOVE)
     const [viewLocation, setViewLocation] = useState(CardLocations.HAND)
-    const [selectedMove, setSelectedMove] = useState<Move | null>(null)
-    const [cardsInHand, setCardsInHand] = useState(hero.activeMoves)
-    const [cardsInDiscard, setCardsInDiscard] = useState<Move[]>([])
-    const [upgradeableCards, setUpgradeableCards] = useState<Move[]>(hero.upgradeableMoves)
+    const [inGameHero, setInGameHero] = useState(new InGameHero(hero))
 
-    const selectMove = (move: Move) => {
-        setSelectedMove(move)
-        setGameState(GameStates.TAKE_TURN)
-    }
-
-    const discardMove = (move: Move) => {
-        const filteredHand = cardsInHand.filter((card => {
-            return card.name !== move.name
-        }))
-        setCardsInHand(filteredHand)
-        setCardsInDiscard([...cardsInDiscard, move])
-    }
-
-    const addUpgradeToHand = (move: Move) => {
-        const filteredUpgradeableCards = upgradeableCards.filter((card) => {
-            return card.name !== move.name
-        })
-        setUpgradeableCards(filteredUpgradeableCards)
-        setCardsInHand([...cardsInHand, move])
-    }
-
-    const addDiscardToHand = (move: Move) => {
-        const filteredDiscardedCards = cardsInDiscard.filter((card) => {
-            return card.name !== move.name
-        })
-        setCardsInDiscard(filteredDiscardedCards)
-        setCardsInHand([...cardsInHand, move])
+    const updateInGameHero = () => {
+        setInGameHero(new InGameHero(inGameHero))
     }
 
     const endTurn = () => {
-        if (selectedMove) {
-            discardMove(selectedMove)
-            setSelectedMove(null)
-            setGameState(GameStates.PICK_MOVE)
-        }
+        inGameHero.endTurn()
+        updateInGameHero()
     }
 
     return <Stack direction="column">
-        <HeroStats />
-        {gameState === GameStates.PICK_MOVE && <Stack direction="column">
+        <HeroStats inGameHero={inGameHero} updateInGameHero={updateInGameHero} />
+        {inGameHero.gameState === GameStates.PICK_MOVE && <Stack direction="column">
             <Typography variant="h4">Select a Move</Typography>
-            <MoveList moves={cardsInHand} selectMove={selectMove}/>
+            <MoveList moves={inGameHero.activeMoves} actions={[CardActions.select]} inGameHero={inGameHero} updateInGameHero={updateInGameHero}/>
         </Stack>}
-        {(gameState === GameStates.TAKE_TURN && selectedMove) && <Stack direction="column">
+        {(inGameHero.gameState === GameStates.TAKE_TURN && inGameHero.selectedMove) && <Stack direction="column">
             <Stack direction="row">
                 <Button variant="contained" onClick={endTurn}>End Turn</Button>
                 <Button variant="contained" onClick={() => {setViewLocation(CardLocations.HAND)}}>Hand</Button>
                 <Button variant="contained" onClick={() => {setViewLocation(CardLocations.DISCARD)}}>Discard</Button>
                 <Button variant="contained" onClick={() => {setViewLocation(CardLocations.UPGRADES)}}>Upgrades</Button>
             </Stack>
-            <MoveDisplay move={selectedMove} />
+            <MoveDisplay move={inGameHero.selectedMove} actions={[]} inGameHero={inGameHero} updateInGameHero={updateInGameHero} />
             {viewLocation === CardLocations.HAND && <Stack direction="column">
                 <Typography>Hand</Typography>
-                <MoveList moves={cardsInHand} discardMove={discardMove}/>
+                <MoveList moves={inGameHero.activeMoves} actions={[CardActions.discard]} inGameHero={inGameHero} updateInGameHero={updateInGameHero}/>
             </Stack>}
             {viewLocation === CardLocations.DISCARD && <Stack direction="column">
                 <Typography>Discard</Typography>
-                <MoveList moves={cardsInDiscard} addMoveToHand={addDiscardToHand}/>
+                <MoveList moves={inGameHero.discardedMoves} actions={[CardActions.retrieve]} inGameHero={inGameHero} updateInGameHero={updateInGameHero}/>
             </Stack>}
             {viewLocation === CardLocations.UPGRADES && <Stack direction="column">
                 <Typography>Upgrades</Typography>
-                <MoveList moves={upgradeableCards} addMoveToHand={addUpgradeToHand}/>
+                <MoveList moves={inGameHero.upgradeableMoves} actions={[CardActions.upgrade]} inGameHero={inGameHero} updateInGameHero={updateInGameHero}/>
             </Stack>}
         </Stack>}
     </Stack>

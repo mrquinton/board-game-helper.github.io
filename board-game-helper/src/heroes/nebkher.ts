@@ -1,5 +1,5 @@
 import Hero from "../types/hero";
-import { ColorTypes, MoveTypes } from "../types/move";
+import { ColorTypes, Item, MoveTypes } from "../types/move";
 
 const nebkher: Hero = {
     id: 'nebkher',
@@ -61,38 +61,31 @@ const nebkher: Hero = {
     ],
     upgradeableMoves: [
         {
-            name: 'Assume Control',
+            name: 'Direct Control',
+            initiative: 7,
+            defense: 8,
+            movement: 3,
+            range: 3,
+            attack: 3,
+            color: ColorTypes.Red,
+            level: 1,
+            item: Item.defense,
+            types: [MoveTypes.Attack],
+            effect: 'Choose One: - Before the attack: Move a friendly minion in range up to 4 spaces to a space adjacent to an enemy hero in range. Target that hero.  - Target a minion adjacent to you.'
+        },
+        {
+            name: 'Twist Fate',
             initiative: 7,
             defense: 7,
             movement: 3,
             range: 2,
+            attack: 4,
             color: ColorTypes.Red,
             level: 1,
+            item: Item.initiative,
             types: [MoveTypes.Attack],
-            effect: 'Choose One: - Before the attack: Move a friendly minion in range up to 3 spaces to a space adjacent to an enemy hero in range. Target that hero.  - Target a minion adjacent to you.'
-        },
-        {
-            name: 'Fleeting Image',
-            initiative: 6,
-            defense: 4,
-            movement: 2,
-            radius: 3,
-            color: ColorTypes.Green,
-            level: 1,
-            types: [MoveTypes.Skill],
-            effect: 'Place an  illusion token in radius. This round: After an action makes you discard a card, swap with an illusion token, regardless of radius, then remove that token.'
-        },
-        {
-            name: 'Imbue Doubt',
-            initiative: 9,
-            defense: 5,
-            movement: 2,
-            radius: 3,
-            color: ColorTypes.Blue,
-            level: 1,
-            types: [MoveTypes.Skill],
-            effect: 'A hero in radius must swap their unresolved card with another card in their hand, if able.'
-        },
+            effect: 'Target a unit in range. After the Attack: If you target a hero, you may swap any two of their resolved cards. (Any active effects on the swapped cards are canceled.)'
+        }
     ]
 }
 

@@ -1,28 +1,35 @@
+export enum CardActions {
+    discard = 'discard',
+    retrieve = 'retrieve',
+    upgrade = 'upgrade',
+    select = 'select'
+}
+
 export enum MoveTypes {
-    Skill,
-    Attack,
-    Movement,
-    Defense,
-    Basic,
-    Ultimate
+    Skill = 'Skill',
+    Attack = 'Attack',
+    Movement = 'Movement',
+    Defense = 'Defense',
+    Basic = 'Basic',
+    Ultimate = 'Ultimate'
 }
 
 export enum ColorTypes {
-    Silver,
-    Gold,
-    Blue,
-    Green,
-    Red,
-    Ultimate
+    Silver = 'Silver',
+    Gold = 'Gold',
+    Blue = 'Blue',
+    Green = 'Green',
+    Red = 'Red',
+    Ultimate = 'Ultimate'
 }
 
 export enum Item {
-    attack,
-    defense,
-    initiative,
-    radius,
-    range,
-    movement
+    attack = 'attack',
+    defense = 'defense',
+    initiative = 'initiative',
+    radius = 'radius',
+    range = 'range',
+    movement = 'movement'
 }
 
 export default interface Move {
