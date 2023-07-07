@@ -134,18 +134,6 @@ const takahide: Hero = {
             effect: 'Choose a card in the discard of a friendly hero in radius. An enemy hero in radius discards a card of the same color, if able.'
         },
         {
-            name: 'Press On',
-            initiative: 10,
-            defense: 4,
-            movement: 2,
-            radius: 4,
-            color: ColorTypes.Blue,
-            level: 2,
-            item: Item.initiative,
-            types: [MoveTypes.Skill],
-            effect: 'A friendly hero in radius may retrieve a discarded card. If they do, that hero may move the number of spaces equal to that cards printed movement value in a straight line.'
-        },
-        {
             name: 'Warlords Naginata',
             initiative: 9,
             defense: 2,

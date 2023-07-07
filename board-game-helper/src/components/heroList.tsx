@@ -13,7 +13,7 @@ export default function HeroList({heroes, selectHero}: HeroListProps) {
 
     return <List>
         {heroes.map(hero => {
-            return <ListItem>
+            return <ListItem key={hero.name}>
                 <ListItemButton onClick={changeHero(hero)}>
                     <ListItemText primary={hero.name} />
                 </ListItemButton>

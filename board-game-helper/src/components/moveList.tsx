@@ -1,20 +1,18 @@
 import { Button, Stack } from "@mui/material";
-import Move, { CardActions } from "../types/move";
+import Move, { MoveCardActions } from "../types/move";
 import MoveDisplay from "./moveDisplay";
 import { InGameHero } from "../types/hero";
 
 export interface MoveListProps {
     moves: Move[]
-    actions: CardActions[]
+    actions: MoveCardActions[]
     inGameHero: InGameHero,
     updateInGameHero: () => void
 }
 export default function MoveList({moves, actions, inGameHero, updateInGameHero}: MoveListProps) {
-    return <Stack direction="column">
+    return <Stack direction="column" spacing={1}>
         {moves.map(move => {
-            return <Stack direction="column">
-                <MoveDisplay move={move} actions={actions} inGameHero={inGameHero} updateInGameHero={updateInGameHero}/>
-            </Stack>
+            return <MoveDisplay key={move.name} move={move} actions={actions} inGameHero={inGameHero} updateInGameHero={updateInGameHero}/>
         })}
     </Stack>
 }

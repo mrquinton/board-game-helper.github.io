@@ -1,8 +1,11 @@
-export enum CardActions {
+export enum MoveCardActions {
     discard = 'discard',
     retrieve = 'retrieve',
     upgrade = 'upgrade',
-    select = 'select'
+    select = 'select',
+    downgrade = 'downgrade',
+    discardToUpgrade = 'discardToUpgrade',
+    freeUpgrade = 'freeUpgrade'
 }
 
 export enum MoveTypes {

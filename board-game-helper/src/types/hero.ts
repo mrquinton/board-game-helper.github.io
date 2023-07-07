@@ -1,5 +1,5 @@
 import { GameStates } from "../components/inGame";
-import Move, { Item } from "./move";
+import Move, { ColorTypes, Item } from "./move";
 
 export default interface Hero {
     id: string,
@@ -43,7 +43,7 @@ export class InGameHero {
     }
 
     getHeartValue() {
-        return Math.floor(this.level / 3) + 1
+        return Math.ceil(this.level / 3)
     }
 
     selectMove(move: Move) {
@@ -87,6 +87,7 @@ export class InGameHero {
     buyLevel() {
         if (this.canLevel()) {
             this.removeGold(this.level)
+            this.level += 1
         }
     }
 
@@ -97,26 +98,51 @@ export class InGameHero {
         this.discardedMoves.push(move)
     }
 
+    moveCardFromHandToUpgrade(move: Move) {
+        this.activeMoves = this.activeMoves.filter((card => {
+            return card.name !== move.name
+        }))
+        this.upgradeableMoves.push(move)
+    }
+
+    moveCardFromDiscardToUpgrade(move: Move) {
+        this.discardedMoves = this.discardedMoves.filter((card => {
+            return card.name !== move.name
+        }))
+        this.upgradeableMoves.push(move)
+    }
+
     addUpgradeItem(move: Move) {
-        const alternateMoves = this.upgradeableMoves = this.upgradeableMoves.filter((card => {
+        const alternateMoves = this.upgradeableMoves.filter((card => {
             return card.color === move.color && card.level === move.level
         }))
-        this.items.push(alternateMoves[0])
+        const matchingColorMove = alternateMoves[0]
+        this.upgradeableMoves = this.upgradeableMoves.filter((card => {
+            return card.name !== matchingColorMove.name
+        }))
+        this.items.push(matchingColorMove)
     }
 
     addUpgradeToHand(move: Move) {
         this.upgradeableMoves = this.upgradeableMoves.filter((card => {
             return card.name !== move.name
         }))
-        this.activeMoves = this.activeMoves.filter((card => {
-            return card.color === move.color
-        }))
         this.activeMoves.push(move)
     }
 
+    removeMatchingColorCardFromHand(move: Move) {
+        this.activeMoves = this.activeMoves.filter((card => {
+            return card.color !== move.color
+        }))
+    }
+
     upgradeCard(move: Move) {
-        this.addUpgradeToHand(move)
-        this.addUpgradeItem(move)
+        if (this.canLevel() && [ColorTypes.Blue, ColorTypes.Red, ColorTypes.Green].includes(move.color)) {
+            this.removeMatchingColorCardFromHand(move)
+            this.addUpgradeToHand(move)
+            this.addUpgradeItem(move)
+            this.buyLevel()
+        }
     }
 
     getItemBonuses() {
