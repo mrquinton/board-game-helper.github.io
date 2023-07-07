@@ -112,18 +112,6 @@ const mortimer: Hero = {
             effect: 'Swap yourself, or a friendly unit in range, with a zombie token in range.'
         },
         {
-            name: 'Spinning Strike',
-            initiative: 11,
-            defense: 2,
-            movement: 1,
-            attack: 4,
-            color: ColorTypes.Red,
-            level: 2,
-            item: Item.defense,
-            types: [MoveTypes.Attack],
-            effect: 'Target a unit adjacent to you. After the attack: This turn: Empty spaces adjacent to you count as obstacles for the enemy heroes.'
-        },
-        {
             name: 'Gravenade',
             initiative: 9,
             defense: 6,
