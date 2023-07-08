@@ -20,6 +20,7 @@ export default function HeroStats({inGameHero, updateInGameHero}: HeroStatsProps
     }
     return <Stack direction="row" spacing={1}>
         <Stack direction="column">
+            <Typography>Round: {inGameHero.round} Turn: {inGameHero.turn}</Typography>
             <Typography>Level: {inGameHero.level}</Typography>
             <Typography>Heart Value: {inGameHero.getHeartValue()}</Typography>
             <Stack direction="row" spacing={1}>

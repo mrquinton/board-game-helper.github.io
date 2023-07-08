@@ -33,19 +33,31 @@ export default function InGame({hero}: InGameProps) {
         updateInGameHero()
     }
 
+    const endRound = () => {
+        inGameHero.endRound()
+        updateInGameHero()
+    }
+
+    const switchToPickMoveDisplay = () => {
+        inGameHero.gameState = GameStates.PICK_MOVE
+        updateInGameHero()
+    }
+
     return <Stack direction="column" spacing={1}>
         <HeroStats inGameHero={inGameHero} updateInGameHero={updateInGameHero} />
+        <Stack direction="row" spacing={1}>
+            <Button variant="contained" onClick={() => {setViewLocation(CardLocations.HAND)}}>Hand</Button>
+            <Button variant="contained" onClick={() => {setViewLocation(CardLocations.DISCARD)}}>Discard</Button>
+            <Button variant="contained" onClick={() => {setViewLocation(CardLocations.UPGRADES)}}>Upgrades</Button>
+            <Button variant="contained" onClick={switchToPickMoveDisplay}>Pick Move</Button>
+            {!inGameHero.canEndRound() && <Button variant="contained" onClick={endTurn}>End Turn</Button>}
+            {inGameHero.canEndRound() && <Button variant="contained" onClick={endRound}>End Round</Button>}
+        </Stack>
         {inGameHero.gameState === GameStates.PICK_MOVE && <Stack direction="column">
             <Typography variant="h5">Select a Move</Typography>
             <MoveList moves={inGameHero.activeMoves} actions={[MoveCardActions.select]} inGameHero={inGameHero} updateInGameHero={updateInGameHero}/>
         </Stack>}
         {(inGameHero.gameState === GameStates.TAKE_TURN && inGameHero.selectedMove) && <Stack direction="column">
-            <Stack direction="row" spacing={1}>
-                <Button variant="contained" onClick={endTurn}>End Turn</Button>
-                <Button variant="contained" onClick={() => {setViewLocation(CardLocations.HAND)}}>Hand</Button>
-                <Button variant="contained" onClick={() => {setViewLocation(CardLocations.DISCARD)}}>Discard</Button>
-                <Button variant="contained" onClick={() => {setViewLocation(CardLocations.UPGRADES)}}>Upgrades</Button>
-            </Stack>
             <Typography variant="h5">Selected Move</Typography>
             <MoveDisplay move={inGameHero.selectedMove} actions={[]} inGameHero={inGameHero} updateInGameHero={updateInGameHero} />
             {viewLocation === CardLocations.HAND && <Stack direction="column">

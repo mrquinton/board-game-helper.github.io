@@ -19,6 +19,8 @@ export class InGameHero {
     items: Move[]
     gold: number
     level: number
+    round: number
+    turn: number
 
     constructor(hero: Hero | InGameHero) {
         this.id = hero.id
@@ -32,6 +34,8 @@ export class InGameHero {
             this.gold = hero.gold
             this.level = hero.level
             this.discardedMoves = hero.discardedMoves
+            this.round = hero.round
+            this.turn = hero.turn
         } else {
             this.gameState = GameStates.PICK_MOVE
             this.selectedMove = null
@@ -39,6 +43,8 @@ export class InGameHero {
             this.gold = 0
             this.level = 1
             this.discardedMoves = []
+            this.round = 1
+            this.turn = 1
         }
     }
 
@@ -57,11 +63,25 @@ export class InGameHero {
         this.gameState = GameStates.TAKE_TURN
     }
 
+    canEndRound() {
+        return this.turn === 4
+    }
+
     endTurn() {
         if (this.selectedMove) {
             this.discardCard(this.selectedMove)
             this.selectedMove = null
             this.gameState = GameStates.PICK_MOVE
+            this.turn += 1
+        }
+    }
+
+    endRound() {
+        if (this.canEndRound()) {
+            this.endTurn()
+            this.recoverCards(this.discardedMoves)
+            this.turn = 1
+            this.round += 1
         }
     }
 

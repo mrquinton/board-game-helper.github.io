@@ -51,8 +51,10 @@ export default function MoveDisplay({move, actions, inGameHero, updateInGameHero
         <CardContent>
             <Stack direction="column">
                 <Typography variant="h5">{move.name}</Typography>
-                <Typography variant="body1">{move.color} - {move.level}</Typography>
-                {(actions.includes(MoveCardActions.upgrade) && move.item) && <Typography>Item: {move.item}</Typography>}
+                <Stack direction="row" spacing={1}>
+                    <Typography variant="body1">{move.color} - {move.level}</Typography>
+                    {(actions.includes(MoveCardActions.upgrade) && move.item) && <Typography>| Item: {itemToIconMap[move.item]}</Typography>}
+                </Stack>
                 <Typography variant="body1">{itemToIconMap[Item.initiative]} {move.initiative}</Typography>
                 <Stack direction="row" spacing={1}>
                     {move.defense && <Typography variant="body1">{itemToIconMap[Item.defense]} {move.defense}</Typography>}
@@ -63,7 +65,6 @@ export default function MoveDisplay({move, actions, inGameHero, updateInGameHero
                 </Stack>
                 <Typography variant="body1">Primary: {move.types}</Typography>
                 <Typography variant="body1">{move.effect}</Typography>
-                {move.item && <Typography variant="body1">Item: {move.item}</Typography>}
             </Stack>
         </CardContent>
         <CardActions>
