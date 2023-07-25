@@ -1,0 +1,12 @@
+enum Zone {
+    LEFT_JUNGLE = "LEFT_JUNGLE",
+    RIGHT_JUNGLE = "RIGHT_JUNGLE",
+    TOP_SPAWN = "TOP_SPAWN",
+    BOTTOM_SPAWN = "BOTTOM_SPAWN",
+    BOTTOM_LANE = "BOTTOM_LANE",
+    TOP_LANE = "TOP_LANE",
+    CENTER = "CENTER",
+    OBSTACLE = "OBSTACLE"
+}
+
+export default Zone
