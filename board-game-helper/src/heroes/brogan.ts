@@ -1,7 +1,7 @@
 import Hero from "../types/hero";
 import { ColorTypes, Item, MoveTypes } from "../types/move";
 
-const mrak: Hero = {
+const brogan: Hero = {
     id: 'brogan',
     name: 'Brogan',
     activeMoves: [
