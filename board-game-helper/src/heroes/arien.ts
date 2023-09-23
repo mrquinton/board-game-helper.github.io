@@ -72,7 +72,7 @@ const arien: Hero = {
             level: 2,
             item: Item.defense,
             types: [MoveTypes.Attack],
-            effect: 'Target a unit in range. After the attack: If the target is adjacent to you, push the target up to 2 spaces'
+            effect: 'Target a unit in range. After the attack: If the target is adjacent to you, push the target up to 2 spaces.'
         },
         {
             name: 'Rogue Wave',
@@ -162,7 +162,7 @@ const arien: Hero = {
             initiative: 4,
             defense: 3,
             movement: 2,
-            rangeL 3,
+            range: 3,
             color: ColorTypes.Green,
             level: 2,
             item: Item.defense,
